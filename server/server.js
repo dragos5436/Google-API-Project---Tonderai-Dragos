@@ -2,12 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// My cats resource
-const cats = [
-    {id: 1, name: "Zelda", age: 3},
-    {id: 2, name: "Tigerlily", age: 10},
-    {id: 3, name: "Rumble", age: 12}
-]
+// Searches Resource
+const Searches = ['cats','dogs','cars','planes','oranges','apples','movies','radios','shoes','hats']
 
 const app = express();
 app.use(bodyParser.json())
@@ -21,11 +17,11 @@ app.post('/', (req, res) => {
     res.status(405).send('Not allowd!')
 })
 
-app.get('/cats', (req, res) => {
-    res.send(cats)
+app.get('/searches', (req, res) => {
+    res.send(seaches)
 })
 
-app.get('/cats/:id', (req, res) => {
+app.get('/searches/:id', (req, res) => {
     try {
         const catId = parseInt(req.params.id) 
         const selectedCat = cats.find(c => c.id === catId)

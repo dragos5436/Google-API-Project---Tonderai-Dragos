@@ -1,11 +1,11 @@
 // ********************************************
 // SETUP
 const btn = document.querySelector('button');
-const form = document.querySelector('#new-cat-form');
-const catsList = document.querySelector('ul');
+const form = document.querySelector('#google-form');
+const resultsList = document.querySelector('ul');
 
 // Bind event listeners
-btn.addEventListener('click', getMessage);
+btn.addEventListener('click', );
 form.addEventListener('submit', submitCat);
 
 // Fetch all cats as soon as app is loaded
