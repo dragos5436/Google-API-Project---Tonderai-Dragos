@@ -5,6 +5,19 @@ main {
     align-items: center;
     margin: 18vh;
 }
+
+.logo2, h1, ol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 10vh;
+}
+
+ol {
+    font-size: 24px;
+}
+
 nav {
     display: flex;
     flex-direction: row;
@@ -32,6 +45,11 @@ p {
     height: auto;
 }
 
+.logo2 {
+    max-width: 10%;
+    height: auto;
+}
+
 #search {
     width: 100%;
     border-radius: 15px;
@@ -53,13 +71,17 @@ input[type=text] {
     padding: 12px 20px 12px 40px;
   }
 
+input[type=button] {
+    position: relative;
+    left: 170px;
+  }
+
 upperFooter {
     display: flex;
     flex-direction: row;
     justify-content: left;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    align-items: center;
     padding-left: 10px;
     background-color: rgb(238, 238, 238);
     color:rgb(119, 119, 119);
@@ -69,9 +91,7 @@ lowerFooter {
     flex-direction: row;
     justify-content: space-between;
     text-align: center;
-    padding-top: 0px;
     padding-left: 10px;
-    border-style: 1px solid;
     border-color: #999999;
     background-color: rgb(238, 238, 238);
     color:rgb(119, 119, 119);

@@ -1,66 +1,53 @@
-// ********************************************
+
 // SETUP
 const btn = document.querySelector('button');
 const form = document.querySelector('#google-form');
 const resultsList = document.querySelector('ul');
 
 // Bind event listeners
-btn.addEventListener('click', );
-form.addEventListener('submit', submitCat);
+btn.addEventListener('click', getSearch);
+form.addEventListener('submit', submitSearch);
 
-// Fetch all cats as soon as app is loaded
-getAllCats();
+// Fetch searches
+getAllSearches();
 
-// ********************************************
 
-// CATS FLOW
+
 // index
-function getAllCats(){
-    fetch('http://localhost:3000/cats')
+function getAllSearches(){
+    fetch('http://localhost:3000/searches')
         .then(r => r.json())
-        .then(appendCats)
         .catch(console.warn)
 };
 
 // create
-function submitCat(e){
+function submitSearch(e){
     e.preventDefault();
 
-    const catData = {
-        name: e.target.name.value,
-        age: e.target.age.value
+
+    const searchData = {
+        search: e.target.search.value,
+        url: e.target.url.value
     };
+
+    console.log(searchData.value)
 
     const options = { 
         method: 'POST',
-        body: JSON.stringify(catData),
-        headers: {
-            "Content-Type": "application/json"
-        }
+        body: JSON.stringify(searchData),
     };
 
-    fetch('http://localhost:3000/cats', options)
+    fetch('http://localhost:3000/searches', options)
         .then(r => r.json())
-        .then(appendCat)
         .catch(console.warn)
 };
 
-// helpers
-function appendCats(data){
-    data.cats.forEach(appendCat);
-};
 
-function appendCat(catData){
-    const newLi = document.createElement('li');
-    newLi.textContent = `Name: ${catData.name} || Age: ${catData.age}`
-    catsList.append(newLi);
-};
 
-// ********************************************
 
 // MESSAGE FLOW
-function getMessage(){
-    fetch('http://localhost:3000')
+function getSearch(){
+    fetch('http://localhost:3000/searches/random')
         .then(r => r.text())
         .then(renderMessage)
         .catch(console.warn)
@@ -73,4 +60,3 @@ function renderMessage(msgText){
     document.body.append(msg);
 };
 
-// ********************************************
