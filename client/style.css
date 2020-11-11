@@ -3,7 +3,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 18vh;
+    margin: 15.5vh;
 }
 
 .logo2, h1, ol {
@@ -29,6 +29,7 @@ section {
     justify-content: space-around;
 }
 p {
+    display: flex;
     flex-direction: row;
     padding-right: 20px;
 }
@@ -96,7 +97,17 @@ lowerFooter {
     background-color: rgb(238, 238, 238);
     color:rgb(119, 119, 119);
 }
-lowerFooter a:visited {
+a, a:visited {
     color: inherit;
+}
+section > p {
+    color: blue;
+    text-decoration: underline;
+    
+}
+header {
+    position: relative;
+    left: -10px;
+    bottom: -17px;
 }
  
