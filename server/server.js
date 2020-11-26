@@ -1,57 +1,49 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// My cats resource
-const cats = [
-    {id: 1, name: "Zelda", age: 3},
-    {id: 2, name: "Tigerlily", age: 10},
-    {id: 3, name: "Rumble", age: 12}
+// Searches Resource
+const searchResults = [
+    {search: "cats", url:"https://bit.ly/3eOEoCW"},
+    {search: "dogs", url:"https://bit.ly/3n9mMo7"}, 
+    {search: "cars", url:"https://bit.ly/3piKCzx"},
+    {search: "planes", url: "https://bit.ly/3pgubnC"},
+    {search: "oranges", url: "https://bit.ly/3eJnDc0"},
+    {search: "apples", url: "https://bit.ly/32vOiUW"},
+    {search: "movies", url: "https://bit.ly/2Ir3H1Q"},
+    {search: "radios", url: "https://bit.ly/3kqx5Tb"},
+    {search: "shoes", url: "https://bit.ly/36trYwy"},
+    {search: "hats", url: "https://bit.ly/2UcrWn1"}
 ]
 
 const app = express();
-app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
-    res.send('Hello there!')
+    res.send('Hello user, welcome to Google!')
 })
 
-app.post('/', (req, res) => {
-    res.status(405).send('Not allowd!')
+app.get('/searches', (req, res) => {
+    res.send(searchResults)
 })
 
-app.get('/cats', (req, res) => {
-    res.send(cats)
+app.get('/searches/random', (req, res) => {
+    res.send(searchResults[Math.floor(Math.random() * searchResults.length)])
 })
 
-app.get('/cats/:id', (req, res) => {
+app.get('/searches/:search', (req, res) => {
     try {
-        const catId = parseInt(req.params.id) 
-        const selectedCat = cats.find(c => c.id === catId)
-        if(!selectedCat){
-            throw new Error('That cat does not exist!')
+        const searchName = req.params.search  
+        const chosenSearch = searchResults.find(s => s.search === searchName)
+        if(!chosenSearch){
+            res.send('Search unavailable, please try something else')
+            throw new Error('Search unavailable, please try something else')
+        } else {
+            res.send(chosenSearch)
         }
-        res.send(selectedCat)
     } catch (err) {
         console.log(err)
         res.status(404).send(err)
     }
-})
-
-app.post('/cats', (req, res) => {
-    const data = req.body
-    const newCatId = cats.length + 1
-    const newCat = {id: newCatId, ...data}
-    cats.push(newCat)
-    res.status(201).send(newCat)
-})
-
-app.delete('/cats/:id', (req, res) => {
-     const catId = parseInt(req.params.id) 
-     const catToDelete = cats.find(c => c.id === catId)
-     cats.splice(cats.indexOf(catToDelete), 1);
-     res.status(204).send()
 })
 
 module.exports = app

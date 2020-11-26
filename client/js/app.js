@@ -1,66 +1,76 @@
-// ********************************************
+const searchResults = [
+    {search: "cats", url:"https://bit.ly/3eOEoCW"},
+    {search: "dogs", url:"https://bit.ly/3n9mMo7"}, 
+    {search: "cars", url:"https://bit.ly/3piKCzx"},
+    {search: "planes", url: "https://bit.ly/3pgubnC"},
+    {search: "oranges", url: "https://bit.ly/3eJnDc0"},
+    {search: "apples", url: "https://bit.ly/32vOiUW"},
+    {search: "movies", url: "https://bit.ly/2Ir3H1Q"},
+    {search: "radios", url: "https://bit.ly/3kqx5Tb"},
+    {search: "shoes", url: "https://bit.ly/36trYwy"},
+    {search: "hats", url: "https://bit.ly/2UcrWn1"}
+]
+
+
 // SETUP
-const btn = document.querySelector('button');
-const form = document.querySelector('#new-cat-form');
-const catsList = document.querySelector('ul');
+const btn = document.querySelector('#lucky');
+const form = document.querySelector('#google-form');
+const resultsList = document.querySelector('#test');
 
 // Bind event listeners
-btn.addEventListener('click', getMessage);
-form.addEventListener('submit', submitCat);
+// btn.addEventListener('click', getSearch)
 
-// Fetch all cats as soon as app is loaded
-getAllCats();
+btn.addEventListener('click', function(){
+    document.getElementById("test").innerHTML = "Are you? Then try your luck here: " + searchResults[Math.floor(Math.random() * searchResults.length)].url;
+  }); 
 
-// ********************************************
+form.addEventListener('submit', submitSearch);
 
-// CATS FLOW
-// index
-function getAllCats(){
-    fetch('http://localhost:3000/cats')
+// Fetch searches
+getAllSearches();
+
+// indexcd
+function getAllSearches(){
+    fetch('http://localhost:3000/searches')
         .then(r => r.json())
-        .then(appendCats)
         .catch(console.warn)
 };
 
 // create
-function submitCat(e){
+function submitSearch(e){
     e.preventDefault();
 
-    const catData = {
-        name: e.target.name.value,
-        age: e.target.age.value
+
+    const searchData = {
+        search: e.target.search.value,
+        url: e.target.url.value
     };
 
     const options = { 
         method: 'POST',
-        body: JSON.stringify(catData),
-        headers: {
-            "Content-Type": "application/json"
-        }
+        body: JSON.stringify(searchData),
     };
 
-    fetch('http://localhost:3000/cats', options)
+    fetch('http://localhost:3000/searches', options)
         .then(r => r.json())
-        .then(appendCat)
+        .then(appendSearch)
         .catch(console.warn)
 };
 
-// helpers
-function appendCats(data){
-    data.cats.forEach(appendCat);
+function appendSearches(data){
+    data.searches.forEach(appendSearch);
 };
 
-function appendCat(catData){
-    const newLi = document.createElement('li');
-    newLi.textContent = `Name: ${catData.name} || Age: ${catData.age}`
-    catsList.append(newLi);
+function appendSearch(searchData){
+    const newP = document.createElement('p');
+    newP.textContent = `search: ${searchData.search} || url: ${searchData.url}`
+    resultsList.append(newP);
 };
 
-// ********************************************
 
 // MESSAGE FLOW
-function getMessage(){
-    fetch('http://localhost:3000')
+function getSearch(){
+    fetch('http://localhost:3000/searches/random')
         .then(r => r.text())
         .then(renderMessage)
         .catch(console.warn)
@@ -73,4 +83,3 @@ function renderMessage(msgText){
     document.body.append(msg);
 };
 
-// ********************************************
